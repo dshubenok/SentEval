@@ -21,6 +21,20 @@ from pymystem3 import Mystem
 m = Mystem()
 
 
+def collect_vocabs():
+    # Getting words from all our vocabularies with '.lst' extensions:
+    vocabulary = {}
+    voc_files = [f for f in os.listdir('vocabularies/') if f.endswith('.lst')]
+    for f in voc_files:
+        words = set()
+        for line in open('vocabularies/' + f, 'r'):
+            lemma = line.strip().split(': ')[0]
+            words.add(lemma.strip())
+        voc_name = f.replace('.lst', '')
+        vocabulary[voc_name] = words
+    return vocabulary
+
+
 ###############################################################################
 
 # start = time.time()
@@ -35,20 +49,6 @@ w2v_model = word2vec.Word2Vec.load_word2vec_format('models/webcorpora.model.bin'
 # print 'All models successfully loaded! it took ', time.time() - start, " seconds."
 
 ###############################################################################
-
-
-def collect_vocabs():
-    # Getting words from all our vocabularies with '.lst' extensions:
-    vocabulary = {}
-    voc_files = [f for f in os.listdir('vocabularies/') if f.endswith('.lst')]
-    for f in voc_files:
-        words = set()
-        for line in open('vocabularies/' + f, 'r'):
-            lemma = line.strip().split(': ')[0]
-            words.add(lemma.strip())
-        voc_name = f.replace('.lst', '')
-        vocabulary[voc_name] = words
-    return vocabulary
 
 
 def vocab_check(reviews, vocabulary):
