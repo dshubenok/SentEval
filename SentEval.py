@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-import process_restraune_request as proc
+import process_restaurant_request as proc
 
 app = Flask(__name__)
 
