@@ -35,6 +35,22 @@ def collect_vocabs():
     return vocabulary
 
 
+###############################################################################
+
+# start = time.time()
+vocabulary = collect_vocabs()
+food_model = joblib.load("models/food.pkl")
+service_model = joblib.load("models/service.pkl")
+interior_model = joblib.load("models/interior.pkl")
+food_model = pickle.loads(food_model)
+service_model = pickle.loads(service_model)
+interior_model = pickle.loads(interior_model)
+w2v_model = word2vec.Word2Vec.load_word2vec_format('models/webcorpora.model.bin', binary=True)
+# print 'All models successfully loaded! it took ', time.time() - start, " seconds."
+
+###############################################################################
+
+
 def vocab_check(reviews, vocabulary):
     # Checking for vocabulary words in the review
     vocab_vectors = list()
@@ -125,7 +141,7 @@ def classify(reviews, vocab_vectors, model):
 
 
 def main(name):
-    start = time.time()
+    # start = time.time()
     reviews = foursquare_crawl(name)
     reviews = zoon_crawl(name, reviews)
     processed = preprocess(reviews)
@@ -140,19 +156,8 @@ def main(name):
             'interior_sentiment': interior_sentiment[0]}
 
 
-###############################################################################
+if __name__ == '__main__':
+    name = sys.argv[1]
+    processed = main(name)
+    print processed
 
-# start = time.time()
-vocabulary = collect_vocabs()
-food_model = joblib.load("models/food.pkl")
-service_model = joblib.load("models/service.pkl")
-interior_model = joblib.load("models/interior.pkl")
-food_model = pickle.loads(food_model)
-service_model = pickle.loads(service_model)
-interior_model = pickle.loads(interior_model)
-w2v_model = word2vec.Word2Vec.load_word2vec_format('models/webcorpora.model.bin', binary=True)
-# print 'All models successfully loaded! it took ', time.time() - start, " seconds."
-
-name = sys.argv[1]
-processed = main(name)
-print processed
