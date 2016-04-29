@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SentEval</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="static/css/freelancer.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="static/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+
+        <style>
+            header {
+                background-color: white;
+                color: black;
+            }
+        </style>
+    </head>
+
+    <body id="page-top" class="index">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#page-top">SentEval Project</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li class="page-scroll">
+                            <a href="#about">Как это работает?</a>
+                        </li>
+                        <li class="page-scroll">
+                            <a href="#contact">О проекте</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <img class="img-responsive" src="static/img/logo-top.png" alt="">
+                        <div class="intro-text">
+                            <span class="name">SentEval</span>
+                            <img class="img-responsive" src="static/img/logo-bottom.png" alt="">
+                            <br/>
+                            <br/>
+                            <span class="skills">Автоматический ресторанный критик в вашем телефоне.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- About Section -->
+        <section style="background-color: #2C3E50;" class="success">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <h2 style="color: white;">Проверить ресторан</h2>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            {% if form %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                     <form method="POST" action="/">
+                      {{ form.csrf_token }}
+                      <p class="lead">Введите название ресторана</p>{{ form.restaurant }} 
+                      <input type="submit" class="btn btn-success-outline" value="Проверить">
+
+                  </form>
+              </div>
+          </div>
+      </div>
+
+      {% else %}
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-4">Еда: <span class="lead label label-success">{{ result.food_sentiment }}</span></div>
+              <div class="col-lg-4">Сервис: <span class="label label-success">{{ result.service_sentiment }}</span></div>
+              <div class="col-lg-4">Интерьер: <span class="label label-success">{{ result.interior_sentiment }}</span></div>
+          </div>
+      </br></br>
+      <div>
+          <h5 class="display-4">Случайные отзывы:</h5>
+      </div>
+      <div class="row">
+          <div style="margin-right: 25px" class="alert alert-info col-lg-3">{{ result.reviews[0] }}</div>
+          <div style="margin-right: 25px" class="alert alert-info col-lg-3">{{ result.reviews[1] }}</div>
+          <div style="margin-right: 25px" class="alert alert-info col-lg-3">{{ result.reviews[2] }}</div>
+      </div>
+      <div>Обработано отзывов: {{ result.reviews_number }}</div>
+      {% endif %}
+
+
+
+
+  </form>
+
+
+</div>
+
+</section>
+
+
+<!-- About Section -->
+<section style="background-color: white;" class="success" id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 style="color: #2C3E50;">Как это работает</h2>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+        <div style="color: black;" class="row">
+            <div class="col-lg-12 jumbotron">
+                <p>Вы вводите название ресторана</p>
+                <p>Мы автоматически собираем отзывы с сайтов Foursquare и Zoon</p>
+                <p>Затем мы анализируем тексты отзывов с помощью библиотеки pymystem3 (лемматизируем и определяем части речи)</p>
+                <p>Далее полученные леммы поступают на вход обученной модели word2vec и трём SVM моделям </p>
+                <p>(каждая из трёх моделей отвечает за определенный аспект: еда, сервис, интерьер)</p>
+                <p>Результаты усредняются и получаем общую оценку отзывов по ресторану.</p>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- About Section -->
+<section style="background-color: #2C3E50;" class="success" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 style="color: white;">О проекте</h2>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+        <div style="color: white;" class="row">
+            <div class="col-lg-12 jumbotron" style="background-color: #395168;">
+            <p>Это научно-исследовательский проект в рамках учебной программы <a style="color: white; text-decoration: underline;" href="https://www.hse.ru/ma/ling/">Компьютерная лингвистика в магистратуре НИУ ВШЭ</a></p>
+                <p>Основная цель проекта - реализация анализа тональности отзывов о ресторанах.</p>
+                <p>Это открытый проект, поэтому любой желающий может воспользоваться результатами онлайн, либо скачать все материалы и протестировать их самостоятельно.</p>
+                <p>Весь исходный код выложен на <a style="color: white; text-decoration: underline;" href="https://github.com/NadyaMotina/Python_HSE_projects/tree/master/SentEval">GitHub</a></p>
+            </div>
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Footer -->
+<footer class="text-center">
+ <div class="footer-above">
+  <div class="container">
+   <div class="row">
+   </div>
+</div>
+</div>
+<div class="footer-below">
+  <div class="container">
+   <div class="row">
+    <div class="col-lg-12">
+     <p>&copy; SentEval 2016</p>
+     НИУ "Высшая Школа Экономики"
+ </div>
+</div>
+</div>
+</div>
+</footer>
+
+<!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
+<div class="scroll-top page-scroll visible-xs visible-sm">
+ <a class="btn btn-primary" href="#page-top">
+  <i class="fa fa-chevron-up"></i>
+</a>
+</div>
+
+
+<!-- jQuery -->
+<script src="static/scripts/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="static/scripts/bootstrap.min.js"></script>
+
+<!-- Plugin JavaScript -->
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<script src="static/scripts/classie.js"></script>
+<script src="static/scripts/cbpAnimatedHeader.js"></script>
+
+<!-- Contact Form JavaScript -->
+<script src="static/scripts/jqBootstrapValidation.js"></script>
+<script src="static/scripts/contact_me.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="static/scripts/freelancer.js"></script>
+
+</body>
+
+</html>
