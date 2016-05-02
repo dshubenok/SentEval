@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, url_for
 from flask_wtf import Form
 from wtforms import StringField
 
@@ -28,7 +28,7 @@ app.secret_key = 'so secret'
 
 
 @app.route('/', methods=['GET', 'POST'])
-def hello_world():
+def index():
     form = RestaurantForm()
 
     if form.validate_on_submit():
