@@ -119,14 +119,15 @@ def classify(reviews, model, vocabulary):
 			else:
 				sentiments.append(0)
 		except ValueError: continue
+	print sentiments
 	return sentiments_mean(sentiments)
 
 def sentiments_mean(sentiments):
-	final = np.mean(np.array(sentiments))
-	# print sentiments
-	if final > 0: return 'Отлично'
-	elif final < 0: return 'negative'
-	else: return 'neutral'
+	senti_dic = {}
+	senti_dic['positive'] = sentiments.count(1)
+	senti_dic['negative'] = sentiments.count(-1)
+	senti_dic['neutral'] = sentiments.count(0)
+	return senti_dic
 
 def main(name):
 	start = time.time()
@@ -148,9 +149,9 @@ def main(name):
 ###############################################################################
 
 vocabulary = collect_vocabs()
-food_model = joblib.load("models/food.pkl")  #'sklearn.svm.classes.SVC'
-service_model = joblib.load("models/service.pkl")
-interior_model = joblib.load("models/interior.pkl")
+food_model = joblib.load("models/food_lr.pkl")  #'sklearn.svm.classes.SVC'
+service_model = joblib.load("models/service_lr.pkl")
+interior_model = joblib.load("models/interior_lr.pkl")
 food_model = pickle.loads(food_model)
 service_model = pickle.loads(service_model)
 interior_model = pickle.loads(interior_model)
